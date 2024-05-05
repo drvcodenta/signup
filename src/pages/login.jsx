@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import AuthContext from '../AuthContext';
 
 export default function Login() {
     let navigate = useNavigate();
+    const { setUser } = useContext(AuthContext);
     const handleSubmit = async(event) =>{
         event.preventDefault();
         const email = document.getElementById('email-address').value;
@@ -16,6 +18,7 @@ export default function Login() {
         });
 
         if(response.ok) {
+            setUser({email});
             navigate('/home')
         } else if (response.status === 404) {
             console.log('User not found.');
